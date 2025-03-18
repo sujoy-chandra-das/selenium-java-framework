@@ -15,7 +15,7 @@ public class MyFirstTestFW extends BaseTest {
     public static void LoginTest(String username, String password) throws InterruptedException {
 
         // ✅ Explicit wait defined here
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         driver.findElement(By.linkText(Loc.getProperty("signin_link"))).click();
 
