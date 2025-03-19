@@ -1,40 +1,64 @@
 package utilities;
 
 import org.apache.poi.ss.usermodel.*;
+import org.testng.annotations.DataProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 public class ReadXLSdata {
 
-    public void getData(String excelSheetName) throws IOException {
-        File f = new File(System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\testdata.xlsx");
-        FileInputStream fis = new FileInputStream(f);
-        Workbook wb = WorkbookFactory.create(fis);
-        Sheet sheetName = wb.getSheet(excelSheetName);
+    @DataProvider(name = "bvtdata")
+    public String[][] getData(Method m) throws IOException {
+        String excelSheetName = m.getName();
 
-        int totalRows = sheetName.getLastRowNum();
-        System.out.println(totalRows);
-        Row rowCells = sheetName.getRow(0); // Fixed variable name
-        int totalCols = rowCells.getLastCellNum();
-        System.out.println(totalCols);
+        // Construct the file path
+        String filePath = System.getProperty("user.dir") + "/src/test/resources/testdata/testdata.xlsx";
+        System.out.println("File Path: " + filePath); // Debug statement
+        File f = new File(filePath);
 
-        DataFormatter format = new DataFormatter();
-
-        String testData[][]= new String [totalRows][totalCols];
-        for(int i=1; i<=totalRows; i++ )
-        {
-            for(int j=0; j<totalCols; j++)
-            {
-                testData[i-1][j]=format.formatCellValue(sheetName.getRow(i).getCell(j));
-                System.out.println(testData[i-1][j]);
-            }
-
+        if (!f.exists()) {
+            throw new FileNotFoundException("File not found at: " + filePath);
         }
 
-        wb.close(); // Close workbook to prevent memory leaks
-        fis.close(); // Close file stream
+        try (FileInputStream fis = new FileInputStream(f);
+             Workbook wb = WorkbookFactory.create(fis)) {
+
+            Sheet sheetName = wb.getSheet(excelSheetName);
+            if (sheetName == null) {
+                throw new IllegalArgumentException("Sheet with name '" + excelSheetName + "' not found in the workbook.");
+            }
+
+            int totalRows = sheetName.getLastRowNum(); // Last row index
+            Row headerRow = sheetName.getRow(0); // Header row
+            if (headerRow == null) {
+                throw new IllegalArgumentException("Header row is missing in the sheet.");
+            }
+
+            int totalCols = headerRow.getLastCellNum(); // Number of columns
+
+            System.out.println("Total Rows: " + totalRows);
+            System.out.println("Total Columns: " + totalCols);
+
+            DataFormatter format = new DataFormatter();
+            String[][] testData = new String[totalRows][totalCols]; // Adjusted array size
+
+            for (int i = 1; i <= totalRows; i++) { // Start from row 1 (skip header)
+                Row row = sheetName.getRow(i);
+                if (row == null) {
+                    continue; // Skip empty rows
+                }
+
+                for (int j = 0; j < totalCols; j++) {
+                    Cell cell = row.getCell(j);
+                    testData[i - 1][j] = (cell != null) ? format.formatCellValue(cell) : "";
+                    System.out.println(testData[i - 1][j]);
+                }
+            }
+            return testData;
+        }
     }
 }
-
