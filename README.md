@@ -1,46 +1,59 @@
-# 🚀 Selenium Java Automation Framework
+# 📱 Appium Java Automation Framework
 
-A **modular test automation framework** built with **Selenium, TestNG, Maven, and Page Object Model (POM)**, designed for **scalability, maintainability, and CI/CD integration**.  
-This framework demonstrates expertise in **automation architecture, data-driven testing, reusable components, and structured reporting**.
+A **modular mobile test automation framework** built using **Appium, Java, Maven, and TestNG**.  
+The framework follows **Page Object Model (POM)** design pattern, enabling **scalable, maintainable, and reusable** automation for Android and iOS apps.  
+It supports **data-driven testing, parallel execution, CI/CD pipelines, and structured reporting**.
 
 ---
 
 ## 📂 Project Structure
 
-TestAutomationFramework
-│── pom.xml # Maven configuration & dependencies
-│── src/test/java
-│ ├── base/BaseTest.java # WebDriver setup & reusable test base
-│ ├── testcase/MyFirstTestFW.java # Sample test case using POM & TestNG
-│ ├── utilities/ReadXLSdata.java # Excel-driven data provider
-│ ├── utilities/readpropertyFile.java # Config file handler
-│── src/test/resources # Test data & configuration files
-│── testrunner/ # TestNG runner XMLs
-│── test-output/ # TestNG reports
+```
 
+AppiumAutomationFramework
+│── pom.xml                         # Maven build configuration & dependencies
+│── src/test/java
+│   ├── base/BaseTest.java           # Driver setup & common hooks
+│   ├── pages/                       # Page Object Model classes for app screens
+│   ├── tests/                       # TestNG test classes
+│   ├── utilities/                   # Reusable helpers (data, waits, config, screenshots)
+│   ├── config/ConfigManager.java    # Loads app & device capabilities from properties file
+│── src/test/resources
+│   ├── testdata/                    # Test data files (Excel/JSON)
+│   ├── capabilities.properties      # Appium server & device config
+│   ├── testng.xml                   # TestNG suite definitions
+│── reports/                         # Test reports (TestNG/Allure/Extent)
+
+````
 
 ---
 
 ## ⚡ Key Features
 
-- **Page Object Model (POM):** Enhances maintainability & reusability.  
-- **TestNG Integration:** Parallel execution, reporting, and annotations.  
-- **Excel-Driven Data Handling:** Flexible data provider for test cases.  
-- **Maven Build Management:** Dependency handling & CI/CD readiness.  
-- **Configuration Management:** Centralized property file handling.  
-- **Reporting:** Auto-generated TestNG reports with logs and test results.  
-- **Scalable Architecture:** Easy to extend for new test modules.  
+- **Page Object Model (POM):** Structured page classes for app screens.  
+- **TestNG Integration:** Parallel execution, groups, priorities, and reporting.  
+- **Appium Capabilities Management:** Configurable via `capabilities.properties`.  
+- **Data-Driven Testing:** Support for Excel/JSON/CSV test data.  
+- **Reusable Utilities:**  
+  - Wait strategies (explicit, fluent waits)  
+  - Screenshot capture on failure  
+  - Property/config loader  
+- **Cross-Platform Support:** Android & iOS readiness.  
+- **CI/CD Friendly:** Easily integrated with Jenkins/GitHub Actions.  
+- **Reporting:** TestNG reports with support for Allure/Extent.  
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Language:** Java  
-- **Test Automation:** Selenium WebDriver  
+- **Mobile Automation:** Appium  
 - **Testing Framework:** TestNG  
 - **Build Tool:** Maven  
-- **Data Handling:** Apache POI (Excel)  
-- **IDE:** IntelliJ IDEA  
+- **Data Handling:** Apache POI (Excel) / JSON  
+- **Device Support:** Android Emulator, Real Devices, iOS Simulator  
+- **CI/CD:** Jenkins / GitHub Actions  
+
 ---
 
 ## ▶️ Getting Started
@@ -48,16 +61,50 @@ TestAutomationFramework
 ### Prerequisites
 - Java JDK 8+  
 - Maven 3+  
-- IntelliJ IDEA / Eclipse  
+- Node.js & Appium Server  
+- Android SDK (for Android) / Xcode (for iOS)  
+- Device or Emulator/Simulator  
 
 ### Setup
 ```bash
 # Clone repository
 git clone <repo-url>
-cd TestAutomationFramework
+cd AppiumAutomationFramework
 
 # Install dependencies
 mvn clean install
-# Run all TestNG tests
+````
+
+### Run Tests
+
+```bash
+# Run all tests
 mvn test
 
+# Run a specific suite
+mvn test -DsuiteXmlFile=testng.xml
+```
+
+---
+
+## 📊 Reporting
+
+* **Default TestNG Reports:** Generated under `/test-output`.
+* **Allure Reports (optional):**
+
+  ```bash
+  mvn allure:serve
+  ```
+* **Extent Reports (optional):** For detailed execution logs & screenshots.
+
+---
+---
+
+## 🎯 Highlights for Portfolio
+
+* Demonstrates **mobile automation expertise** with Appium & Java.
+* Showcases **reusable automation architecture** with POM & utilities.
+* Ready for **cross-platform execution (Android/iOS)**.
+* Includes **data-driven testing & structured reporting**.
+
+```
