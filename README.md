@@ -1,6 +1,6 @@
-# 📱 Appium Java Automation Framework
+# 📱 Selenium Java Automation Framework
 
-A **modular mobile test automation framework** built using **Appium, Java, Maven, and TestNG**.  
+A **modular web test automation framework** built using **Selenium, Java, Maven, and TestNG**.  
 The framework follows **Page Object Model (POM)** design pattern, enabling **scalable, maintainable, and reusable** automation for Android and iOS apps.  
 It supports **data-driven testing, parallel execution, CI/CD pipelines, and structured reporting**.
 
